@@ -26,4 +26,16 @@ class Note(TimeStampedModel):
         verbose_name_plural = "Notes"
 
 class Category(TimeStampedModel):
-    pass
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    author = models.ForeignKey(
+        User,
+        on_delete = models.CASCADE
+    )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
