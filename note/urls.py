@@ -3,8 +3,7 @@ from rest_framework.routers import SimpleRouter
 
 from .views import NotesViewSet, CategoriesViewSet
 
-router = SimpleRouter()
-router.register('<str:token>/', NotesViewSet, basename="notes")
-router.register('<str:token>/categories/', CategoriesViewSet, basename="categories")
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('<str:token>', NotesViewSet.as_view({'get': 'list', 'post': 'create'}), name="notesallview"),
+    path('<str:token>/<int:pk>', NotesViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}, name="noteseditview"))
+]
