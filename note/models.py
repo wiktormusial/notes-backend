@@ -30,6 +30,7 @@ class Category(TimeStampedModel):
     description = models.TextField(blank=True)
     author = models.ForeignKey(
         User,
+        related_name = "categories",
         on_delete = models.CASCADE
     )
 
