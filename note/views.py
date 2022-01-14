@@ -8,15 +8,21 @@ from .serializers import NoteSerializer, CategorySerializer
 # Create your views here.
 
 class NotesViewSet(viewsets.ModelViewSet):
+
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     # permission_classes = [IsAuthenticated]
     serializer_class = NoteSerializer
 
     def get_queryset(self, *args, **kwargs):
         author = self.request.user.id
-        notes = Note.objects.all().filter(author=author)
+        queryset = Note.objects.all().filter(author=author)
 
-        return notes
+        is_archived = self.request.query_params.get('is_archived')
+
+        if is_archived is not None:
+            queryset = queryset.filter(is_archived=is_archived)
+
+        return queryset
 
 class CategoriesViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
