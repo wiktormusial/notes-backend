@@ -1,5 +1,9 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.urls import reverse
+
+from rest_framework.test import RequestsClient
+from rest_framework.authtoken.models import Token
 
 from .models import Note, Category
 
@@ -37,3 +41,12 @@ class CategoryTestCase(TestCase):
     def test_categories_have_names(self):
         category = Category.objects.get(name="test title")
         self.assertEqual(category.__str__(), "test title")
+
+class URLTestCase(TestCase):
+    def test_notes_urls_are_valid(self):
+        response = self.client.get(reverse('notes'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_categories_urls_are_valid(self):
+        response = self.client.get(reverse('categories'))
+        self.assertEqual(response.status_code, 200)
