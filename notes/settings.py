@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'note.apps.NoteConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
