@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('schema/', get_schema_view(title="Note API"), name='openapi-schema'),
+    path('docs/', include('docs.urls'))
 ]
