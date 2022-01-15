@@ -3,6 +3,8 @@ from rest_framework import serializers
 from .models import Note, Category
 
 class NoteSerializer(serializers.ModelSerializer):
+    slug = serializers.CharField(max_length=100, read_only=True)
+
     class Meta:
         model = Note
         fields = "__all__"
@@ -25,6 +27,8 @@ class NoteSerializer(serializers.ModelSerializer):
         return value
 
 class CategorySerializer(serializers.ModelSerializer):
+    slug = serializers.CharField(max_length=100, read_only=True)
+
     class Meta:
         model = Category
         fields = "__all__"
