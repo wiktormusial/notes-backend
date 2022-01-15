@@ -1,5 +1,8 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 from utils.models import TimeStampedModel
 
@@ -20,6 +23,10 @@ class Note(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f'{uuid.uuid4()}-{self.title}')
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Note"

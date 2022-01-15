@@ -30,6 +30,9 @@ class NoteTestCase(TestCase):
         note = Note.objects.get(title="Test title")
         self.assertEqual(note.author.username, "test_user")
 
+    def test_note_have_slug(self):
+        note = Note.objects.get(title="Test title")
+        self.assertNotEqual(note.slug, '')
 
 class CategoryTestCase(TestCase):
     def setUp(self):
