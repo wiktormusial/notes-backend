@@ -45,6 +45,10 @@ class CategoryTestCase(TestCase):
         category = Category.objects.get(name="test title")
         self.assertEqual(category.__str__(), "test title")
 
+    def test_categories_have_slugs(self):
+        category = Category.objects.get(name="test title")
+        self.assertNotEqual(category.slug, '')
+
 class URLTestCase(TestCase):
     def test_notes_urls_are_valid(self):
         response = self.client.get(reverse('notes'))

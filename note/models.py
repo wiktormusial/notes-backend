@@ -33,6 +33,7 @@ class Note(TimeStampedModel):
         verbose_name_plural = "Notes"
 
 class Category(TimeStampedModel):
+    slug = models.SlugField(blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     author = models.ForeignKey(
@@ -43,6 +44,10 @@ class Category(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f'{uuid.uuid4()}-{self.name}')
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Category"
