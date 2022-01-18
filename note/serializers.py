@@ -7,40 +7,31 @@ class NoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Note
-        fields = "__all__"
+        fields = ['id', 'slug', 'created_at', 'update_at', 'title', 'body', 'is_archived', 'author', 'category']
+        read_only_fields = ('author', 'slug', )
 
     def create(self, validated_data):
-        obj = Note.objects.create(**validated_data)
-        obj.author = self.context['request'].user
-        obj.save()
+        note = Note(**validated_data)
+        note.author = self.context['request'].user
+        note.save()
 
-        return obj
+        return note
 
     def validate_category(self, value):
         if not self.context['request'].user.categories.filter(pk=value.pk).exists():
             raise serializers.ValidationError('invalid category')
         return value
 
-    def validate_author(self, value):
-        if not self.context['request'].user.id == value.id:
-            raise serializers.ValidationError('invalid author')
-        return value
-
 class CategorySerializer(serializers.ModelSerializer):
-    slug = serializers.CharField(max_length=100, read_only=True)
-
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ['id', 'created_at', 'update_at', 'slug', 'author', 'name', 'description']
+        read_only_fields = ('author', 'slug')
+
 
     def create(self, validated_data):
-        obj = Category.objects.create(**validated_data)
-        obj.author = self.context['request'].user
-        obj.save()
+        category = Category(**validated_data)
+        category.author = self.context['request'].user
+        category.save()
 
-        return obj
-
-    def validate_author(self, value):
-        if not self.context['request'].user.id == value.id:
-            raise serializers.ValidationError('invalid author')
-        return value
+        return category
