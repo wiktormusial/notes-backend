@@ -15,7 +15,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testserver', 'localhost', "http://localhost:3000",]
+ALLOWED_HOSTS = ['testserver', 'localhost', "http://localhost:3000"]
 
 
 # Application definition
@@ -135,7 +135,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-SITE_ID=1
+SITE_ID = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

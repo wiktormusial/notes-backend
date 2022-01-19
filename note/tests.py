@@ -2,12 +2,12 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from rest_framework.test import RequestsClient
-from rest_framework.authtoken.models import Token
 
 from .models import Note, Category
 
-#models
+# models
+
+
 class NoteTestCase(TestCase):
     def setUp(self):
         User.objects.create(username="test_user", password="pass")
@@ -16,7 +16,10 @@ class NoteTestCase(TestCase):
         Category.objects.create(name="test title", author=user)
         category = Category.objects.get(name="test title")
 
-        Note.objects.create(title="Test title", body="test body", category=category, author=user)
+        Note.objects.create(title="Test title",
+                            body="test body",
+                            category=category,
+                            author=user)
 
     def test_notes_shows_names(self):
         note = Note.objects.get(title="Test title")
@@ -34,6 +37,7 @@ class NoteTestCase(TestCase):
         note = Note.objects.get(title="Test title")
         self.assertNotEqual(note.slug, '')
 
+
 class CategoryTestCase(TestCase):
     def setUp(self):
         User.objects.create(username="test_user", password="pass")
@@ -48,6 +52,7 @@ class CategoryTestCase(TestCase):
     def test_categories_have_slugs(self):
         category = Category.objects.get(name="test title")
         self.assertNotEqual(category.slug, '')
+
 
 class URLTestCase(TestCase):
     def test_notes_urls_are_valid(self):

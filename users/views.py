@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from .serializers import UserSerializer
 
+
 class UserInfoView(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
 
